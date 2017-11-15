@@ -573,7 +573,9 @@ export const Constants = {
             mentionHighlightBg: '#ffe577',
             mentionHighlightLink: '#166de0',
             codeTheme: 'github',
-            image: mattermostThemeImage
+            image: mattermostThemeImage,
+            ieScrollbarFaceColor: '#a0a2aa',
+            ieScrollbarTrackColor: '#e2e4e7'
         },
         organization: {
             type: 'Organization',
@@ -600,7 +602,9 @@ export const Constants = {
             mentionHighlightBg: '#f3e197',
             mentionHighlightLink: '#2f81b7',
             codeTheme: 'github',
-            image: defaultThemeImage
+            image: defaultThemeImage,
+            ieScrollbarFaceColor: '#9699a1',
+            ieScrollbarTrackColor: '#d6d9e1'
         },
         mattermostDark: {
             type: 'Mattermost Dark',
@@ -627,7 +631,9 @@ export const Constants = {
             mentionHighlightBg: '#984063',
             mentionHighlightLink: '#a4ffeb',
             codeTheme: 'solarized-dark',
-            image: mattermostDarkThemeImage
+            image: mattermostDarkThemeImage,
+            ieScrollbarFaceColor: '#757d8a',
+            ieScrollbarTrackColor: '#2c3648'
         },
         windows10: {
             type: 'Windows Dark',
@@ -654,7 +660,9 @@ export const Constants = {
             mentionHighlightBg: '#784098',
             mentionHighlightLink: '#a4ffeb',
             codeTheme: 'monokai',
-            image: windows10ThemeImage
+            image: windows10ThemeImage,
+            ieScrollbarFaceColor: '#6a6c71',
+            ieScrollbarTrackColor: '#141414'
         }
     },
     THEME_ELEMENTS: [

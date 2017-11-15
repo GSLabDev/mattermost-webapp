@@ -263,7 +263,12 @@
         padding: 1em 0 0;
         position: absolute;
         width: 100%;
-
+        /* IE11 specific properties */
+        scrollbar-face-color: #a0a2aa;
+        scrollbar-track-color: #e2e4e7;
+        scrollbar-arrow-color: #a0a2aa;
+        scrollbar-shadow-color: #a0a2aa;
+        /*********/
         &.active {
             display: inline;
         }

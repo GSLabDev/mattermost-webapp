@@ -785,6 +785,15 @@ export function applyTheme(theme) {
     if (!theme.codeTheme) {
         theme.codeTheme = Constants.DEFAULT_CODE_THEME;
     }
+
+    if (theme.ieScrollbarFaceColor) {
+        changeCss('#post-list .post-list-holder-by-time', 'scrollbar-face-color:' + theme.ieScrollbarFaceColor);
+        changeCss('#post-list .post-list-holder-by-time', 'scrollbar-arrow-color:' + theme.ieScrollbarFaceColor);
+        changeCss('#post-list .post-list-holder-by-time', 'scrollbar-shadow-color:' + theme.ieScrollbarFaceColor);
+    }
+    if (theme.ieScrollbarTrackColor) {
+        changeCss('#post-list .post-list-holder-by-time', 'scrollbar-track-color:' + theme.ieScrollbarTrackColor);
+    }
     updateCodeTheme(theme.codeTheme);
 }
 
