@@ -8,14 +8,19 @@ import React from 'react';
 import {Modal} from 'react-bootstrap';
 import {FormattedMessage} from 'react-intl';
 
-import {updateChannelNotifyProps} from 'actions/channel_actions.jsx';
-
 import {NotificationLevels} from 'utils/constants.jsx';
 
 import SettingItemMax from 'components/setting_item_max.jsx';
 import SettingItemMin from 'components/setting_item_min.jsx';
 
 export default class ChannelNotificationsModal extends React.Component {
+    static propTypes = {
+        show: PropTypes.bool.isRequired,
+        onHide: PropTypes.func.isRequired,
+        channel: PropTypes.object.isRequired,
+        channelMember: PropTypes.object.isRequired,
+        currentUser: PropTypes.object.isRequired
+    }
     constructor(props) {
         super(props);
 
@@ -34,10 +39,7 @@ export default class ChannelNotificationsModal extends React.Component {
         this.createPushNotificationLevelSection = this.createPushNotificationLevelSection.bind(this);
 
         this.state = {
-            activeSection: '',
-            notifyLevel: props.channelMember.notify_props.desktop,
-            unreadLevel: props.channelMember.notify_props.mark_unread,
-            pushLevel: props.channelMember.notify_props.push || NotificationLevels.DEFAULT
+            activeSection: ''
         };
     }
 
@@ -50,7 +52,7 @@ export default class ChannelNotificationsModal extends React.Component {
 
     handleSubmitDesktopNotifyLevel() {
         const channelId = this.props.channel.id;
-        const notifyLevel = this.state.notifyLevel;
+        const notifyLevel = this.props.notifyLevel;
         const currentUserId = this.props.currentUser.id;
 
         if (this.props.channelMember.notify_props.desktop === notifyLevel) {
@@ -64,7 +66,7 @@ export default class ChannelNotificationsModal extends React.Component {
             user_id: currentUserId
         };
 
-        updateChannelNotifyProps(data, options,
+        this.props.actions.updateChannelNotifyProps(data, options,
             () => {
                 this.updateSection('');
             },
@@ -112,7 +114,7 @@ export default class ChannelNotificationsModal extends React.Component {
             />
         );
 
-        const notificationLevel = this.state.notifyLevel;
+        const notificationLevel = this.props.notifyLevel;
 
         if (this.state.activeSection === 'desktop') {
             const notifyActive = [false, false, false, false];
@@ -250,7 +252,7 @@ export default class ChannelNotificationsModal extends React.Component {
 
     handleSubmitMarkUnreadLevel() {
         const channelId = this.props.channel.id;
-        const markUnreadLevel = this.state.unreadLevel;
+        const markUnreadLevel = this.props.unreadLevel;
 
         if (this.props.channelMember.notify_props.mark_unread === markUnreadLevel) {
             this.updateSection('');
@@ -263,7 +265,7 @@ export default class ChannelNotificationsModal extends React.Component {
             user_id: this.props.currentUser.id
         };
 
-        updateChannelNotifyProps(data, options,
+        this.props.actions.updateChannelNotifyProps(data, options,
             () => {
                 this.updateSection('');
             },
@@ -295,7 +297,7 @@ export default class ChannelNotificationsModal extends React.Component {
                                 id='channelUnreadAll'
                                 type='radio'
                                 name='markUnreadLevel'
-                                checked={this.state.unreadLevel === NotificationLevels.ALL}
+                                checked={this.props.unreadLevel === NotificationLevels.ALL}
                                 onChange={this.handleUpdateMarkUnreadLevel.bind(this, NotificationLevels.ALL)}
                             />
                             <FormattedMessage
@@ -311,7 +313,7 @@ export default class ChannelNotificationsModal extends React.Component {
                                 id='channelUnreadMentions'
                                 type='radio'
                                 name='markUnreadLevel'
-                                checked={this.state.unreadLevel === NotificationLevels.MENTION}
+                                checked={this.props.unreadLevel === NotificationLevels.MENTION}
                                 onChange={this.handleUpdateMarkUnreadLevel.bind(this, NotificationLevels.MENTION)}
                             />
                             <FormattedMessage id='channel_notifications.onlyMentions'/>
@@ -351,7 +353,7 @@ export default class ChannelNotificationsModal extends React.Component {
         } else {
             let describe;
 
-            if (!this.state.unreadLevel || this.state.unreadLevel === NotificationLevels.ALL) {
+            if (!this.props.unreadLevel || this.props.unreadLevel === NotificationLevels.ALL) {
                 describe = (
                     <FormattedMessage
                         id='channel_notifications.allUnread'
@@ -384,7 +386,7 @@ export default class ChannelNotificationsModal extends React.Component {
 
     handleSubmitPushNotificationLevel() {
         const channelId = this.props.channel.id;
-        const notifyLevel = this.state.pushLevel;
+        const notifyLevel = this.props.pushLevel;
         const currentUserId = this.props.currentUser.id;
 
         if (this.props.channelMember.notify_props.push === notifyLevel) {
@@ -398,7 +400,7 @@ export default class ChannelNotificationsModal extends React.Component {
             user_id: currentUserId
         };
 
-        updateChannelNotifyProps(data, options,
+        this.props.actions.updateChannelNotifyProps(data, options,
             () => {
                 this.updateSection('');
             },
@@ -450,7 +452,7 @@ export default class ChannelNotificationsModal extends React.Component {
             />
         );
 
-        const notificationLevel = this.state.pushLevel;
+        const notificationLevel = this.props.pushLevel;
 
         let content;
         if (this.state.activeSection === 'push') {
@@ -640,10 +642,3 @@ export default class ChannelNotificationsModal extends React.Component {
     }
 }
 
-ChannelNotificationsModal.propTypes = {
-    show: PropTypes.bool.isRequired,
-    onHide: PropTypes.func.isRequired,
-    channel: PropTypes.object.isRequired,
-    channelMember: PropTypes.object.isRequired,
-    currentUser: PropTypes.object.isRequired
-};
